@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C3A100FF-0E19-4B5A-9364-1D21B4C5253B}</ProjectGuid>
+    <ProjectGuid>{6603C3AB-A2E9-4A5C-8809-51E4082D2066}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DevOpsAssignment.Tests</RootNamespace>
-    <AssemblyName>DevOpsAssignment.Tests</AssemblyName>
+    <RootNamespace>DevOpsAssignment_IntegrationTests</RootNamespace>
+    <AssemblyName>DevOpsAssignment_IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -48,7 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StringHelperTest.cs" />
+    <Compile Include="HelloWorld_IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

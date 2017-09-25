@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("DevOpsAssignment.Tests")]
+[assembly: AssemblyTitle("DevOpsAssignment_IntegrationTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DevOpsAssignment.Tests")]
+[assembly: AssemblyProduct("DevOpsAssignment_IntegrationTests")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("c3a100ff-0e19-4b5a-9364-1d21b4c5253b")]
+[assembly: Guid("6603c3ab-a2e9-4a5c-8809-51e4082d2066")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]

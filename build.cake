@@ -1,65 +1,54 @@
-#tool "nuget:?package=xunit.runner.console"
-#tool "nuget:?package=OctopusTools"
-
 var target = Argument("target", "Build");
+
+
+Task("Clean")
+.Does(() =>
+{
+// Clean directories.
+CleanDirectory("./output");
+CleanDirectory("./output/bin");
+CleanDirectories("./src/**/bin/" + config);
+});
 
 Task("Default")
   .IsDependentOn("xUnit")
-  .IsDependentOn("Pack")
-  .IsDependentOn("OctoPush")
-  .IsDependentOn("OctoRelease");
+  .IsDependentOn("Pack");
 
 Task("Build")
   .Does(() =>
 {
-  MSBuild("./src/CakeDemo.sln");
+  MSBuild("./src/DevOpsAssignment.sln");
 });
 
-Task("xUnit")
-  .IsDependentOn("Build")
+Task("Run-Unit-Tests")
+    .IsDependentOn("Build")
     .Does(() =>
 {
-  XUnit2("./src/CakeDemo.Tests/bin/Debug/CakeDemo.Tests.dll");
+    MSTest("./src/DevOpsAssignment.Tests/bin/Debug/DevOpsAssignment.Tests.dll");
+});
+Task("Run-Integration-Tests")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    MSTest("./src/DevOpsAssignment_IntegrationTests/bin/Debug/DevOpsAssignment_IntegrationTests.dll");
+});
+Task("CopyFiles")
+.IsDependentOn("RunUnitTests")
+.Does(() =>
+{
+var path = "c:\temp\DevOpsTest";
+var files = GetFiles(path + "/**/*.dll")
++ GetFiles(path + "/**/*.txt");
+// Copy all exe and dll files to the output directory.
+CopyFiles(files, "./output/bin");
+});
+Task("Package")
+.IsDependentOn("RunUnitTests")
+.Does(() =>
+{
+// Zip all files in the bin directory.
+Zip("./output/bin", "./output/build.zip");
 });
 
-Task("Pack")
-  .IsDependentOn("Build")
-  .Does(() => {
-    var nuGetPackSettings   = new NuGetPackSettings {
-                                    Id                      = "CakeDemo",
-                                    Version                 = "0.0.0.1",
-                                    Title                   = "Cake Demo",
-                                    Authors                 = new[] {"Derek Comartin"},
-                                    Description             = "Demo of creating cake.build scripts.",
-                                    Summary                 = "Excellent summary of what the Cake (C# Make) build tool does.",
-                                    ProjectUrl              = new Uri("https://github.com/dcomartin/Cake.Demo"),
-                                    Files                   = new [] {
-                                                                        new NuSpecContent {Source = "CakeDemo.exe", Target = "bin"},
-                                                                      },
-                                    BasePath                = "./src/CakeDemo/bin/Debug",
-                                    OutputDirectory         = "./nuget"
-                                };
-
-    NuGetPack(nuGetPackSettings);
-  });
-
-Task("OctoPush")
-  .IsDependentOn("Pack")
-  .Does(() => {
-    OctoPush("http://your.octopusdeploy.server/", "YOUR_API_KEY", new FilePath("./nuget/CakeDemo.0.0.0.1.nupkg"),
-      new OctopusPushSettings {
-        ReplaceExisting = true
-      });
-  });
-
-Task("OctoRelease")
-  .IsDependentOn("OctoPush")
-  .Does(() => {
-    OctoCreateRelease("CakeDemo", new CreateReleaseSettings {
-        Server = "http://your.octopusdeploy.server/",
-        ApiKey = "YOUR_API_KEY",
-        ReleaseNumber = "0.0.0.1"
-      });
-  });
-
 RunTarget(target);
+
