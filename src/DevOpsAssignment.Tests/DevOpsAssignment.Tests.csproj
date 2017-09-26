@@ -52,9 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DevOpsAssignment\DevOpsAssignment.csproj">
       <Project>{102beacc-039b-4e02-9472-ba0395ad70f0}</Project>
       <Name>DevOpsAssignment</Name>
