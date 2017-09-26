@@ -7,12 +7,11 @@ Task("Clean")
 // Clean directories.
 CleanDirectory("./output");
 CleanDirectory("./output/bin");
-CleanDirectories("./src/**/bin/" + config);
+CleanDirectories("./src/**/bin/");
 });
 
 Task("Default")
-  .IsDependentOn("xUnit")
-  .IsDependentOn("Pack");
+  .IsDependentOn("Clean");
 
 Task("Build")
   .Does(() =>
@@ -33,17 +32,17 @@ Task("Run-Integration-Tests")
     MSTest("./src/DevOpsAssignment_IntegrationTests/bin/Debug/DevOpsAssignment_IntegrationTests.dll");
 });
 Task("CopyFiles")
-.IsDependentOn("RunUnitTests")
+.IsDependentOn("Run-Unit-Tests")
 .Does(() =>
 {
-var path = "c:\temp\DevOpsTest";
+var path = @"c:\temp\DevOpsTest";
 var files = GetFiles(path + "/**/*.dll")
 + GetFiles(path + "/**/*.txt");
 // Copy all exe and dll files to the output directory.
 CopyFiles(files, "./output/bin");
 });
 Task("Package")
-.IsDependentOn("RunUnitTests")
+.IsDependentOn("Run-Unit-Tests")
 .Does(() =>
 {
 // Zip all files in the bin directory.
